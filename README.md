@@ -38,6 +38,9 @@ You must configure ubaboot to work with your board. See `config.h`.
     file `99-ubaboot.rules` into `/etc/udev/rules.d`.
 7. Use `ubaboot.py` to load programs via the bootloader.
 
+Optionally, you can compile and use the C flasher, located inside the `c-programmer` folder. It uses only the
+C standard libraries, and libusb, so it is very portable.
+
 ### Configuration overview
 
 Required configuration:
