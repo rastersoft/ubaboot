@@ -50,7 +50,10 @@ You must configure ubaboot to work with your board. See `config.h`.
 7. Use `ubaboot.py` to load programs via the bootloader.
 
 Optionally, you can compile and use the C flasher, located inside the `c-programmer` folder. It uses only the
-C standard libraries, and libusb, so it is very portable.
+C standard libraries, and libusb, so it is very portable. To compile it, just do:
+
+    make
+    sudo make install
 
 ### Configuration overview
 
