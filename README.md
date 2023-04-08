@@ -17,6 +17,17 @@ ubaboot uses a custom (vendor-defined) USB protocol. See below for details.
 
 The included `ubaboot.py` driver program can upload and verify firmware.
 
+## Changes in rastersoft fork
+
+This is a fork of the original ubaboot (from rrevans: <https://github.com/rrevans/ubaboot>).
+The changes that include are:
+
+* a C-language programmer
+* an udev rules file for Linux with the right VID/PID valued
+* optional parameters to wait for the device to be set in programming mode, both
+in text and graphical mode (using wxwidgets)
+* added a command line parameter to check if it's installed
+
 ## Getting started
 
 You must configure ubaboot to work with your board. See `config.h`.

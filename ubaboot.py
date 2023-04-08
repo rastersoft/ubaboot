@@ -21,6 +21,7 @@ import usb.core
 import argparse
 from collections import namedtuple
 import sys
+import time
 
 # Default vendor/product id assigned by openmoko.
 DEFAULT_DEV = '1d50:611c'
@@ -43,6 +44,10 @@ def parse_args():
                         required=dev_required, help=dev_help)
     parser.add_argument('--gui', action='store_const', const=True,
                         default=False, help='Show a GUI')
+    parser.add_argument('--wait', action='store_const', const=True,
+                        default=False, help='Wait until the device is set in programming mode')
+    parser.add_argument('--check', action='store_const', const=True,
+                        default=False, help='Just return without error, to check if it is installed')
     subparsers = parser.add_subparsers(title='loader commands',
                                        metavar='<command>')
     stat = subparsers.add_parser('stat', help='read signature/fuses')
@@ -71,7 +76,11 @@ def parse_args():
 
     reboot = subparsers.add_parser('reboot', help='reboot device')
     reboot.set_defaults(mode='reboot', reboot=True)
-    return parser.parse_args()
+
+    arguments = parser.parse_args()
+    if arguments.gui and arguments.wait:
+        raise ValueError("--gui and --wait can't be used at the same time")
+    return arguments
 
 class IHexLine(namedtuple('IHexLine', 'addr type data')):
     """Stores one line of an Intel hex file."""
@@ -180,6 +189,9 @@ class UbabootDevice(object):
 def main():
     args = parse_args()
 
+    if args.check:
+        sys.exit(0)
+
     vid, pid = args.dev
     dev = usb.core.find(idVendor=vid, idProduct=pid)
     if not dev:
@@ -190,7 +202,15 @@ def main():
                 raise ValueError('Cancelled')
             dev = usb.core.find(idVendor=vid, idProduct=pid)
         else:
-            raise ValueError('cannot open ubaboot device')
+            if (args.wait):
+                while True:
+                    dev = usb.core.find(idVendor=vid, idProduct=pid)
+                    if dev:
+                        break
+                    print("Cannot open ubaboot device. Retrying...")
+                    time.sleep(1)
+            else:
+                raise ValueError('cannot open ubaboot device')
 
     ubaboot = UbabootDevice(dev)
 
