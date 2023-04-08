@@ -211,6 +211,7 @@ Thank you Richard Woodbury for reviewing lots of code and testing!
 ## Copyright notice
 
 Copyright 2017 by Robert Evans (rrevans@gmail.com)
+Copyright 2023 by Raster Software Vigo (rastersoft@gmail.com)
 
 ubaboot is licensed under the terms of
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html). See LICENSE for details.

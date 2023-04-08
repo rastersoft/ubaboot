@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Copyright 2017 by Robert Evans (rrevans@gmail.com)
+# Copyright 2023 by Raster Software Vigo (rastersoft@gmail.com)
 #
 # This file is part of ubaboot.
 #
