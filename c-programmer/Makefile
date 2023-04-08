@@ -18,6 +18,8 @@
 UBABOOT_LIBS = libusb-1.0
 CFLAGS = -Os -g -Wall
 
+DESTDIR ?= "/usr/local"
+
 all: ubaboot
 
 clean:
@@ -31,3 +33,6 @@ ubaboot.o: ubaboot.c ubaboot.h ../config.h read_hex.h
 
 ubaboot: ubaboot.o read_hex.o
 	gcc -o ubaboot ubaboot.o read_hex.o `pkg-config --libs $(UBABOOT_LIBS)`
+
+install: ubaboot
+	install ubaboot $(DESTDIR)/bin
